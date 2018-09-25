@@ -10,11 +10,11 @@ const server = http.createServer(app);
 var io = socketIO(server);
 
 io.on('connection', (socket) => {
-    console.log('New user connected');
+    console.log('New user connected at> ' + socket.id);
 
     socket.on('createMessage', (message) => {
-        console.log('createEmail', message);
-        socket.emit('newMessage', {...message, createdAt: new Date()});
+        console.log('createMessage', message);
+        io.emit('newMessage', {...message, createdAt: new Date().getTime()});
     });
 
     socket.on('disconnect', () => {
